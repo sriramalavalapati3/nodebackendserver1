@@ -1,0 +1,8 @@
+Use the $lookup operator in an aggregation pipeline to join the users and purchases collections, and return a new documents that contains the name and age of each user, along with their purchases. The output should look like this?
+A. db.user.aggregate([ { $lookup: { from: "purchase", localField: "_id", foreignField: "user_id", as: "purchases" } }])
+
+2.Use the $group operator in an aggregation pipeline to calculate the total number of purchases and total spending for each user. The output should look like this?
+A.db.user.aggregate([ { $lookup: { from: "purchase", localField: "_id", foreignField: "user_id", as: "purchases" } }, { $group: { _id: "$_id", name: { $first: "$name" }, total_purchases: { $sum: { $size: "$purchases" } }, total_spending: { $sum: { $sum: "$purchases.price" } } } }])
+
+3.Use the $sort operator to sort the output documents by total spending in descending order. The output should look like this:?
+A.db.user.aggregate([ { $lookup: { from: "purchase", localField: "_id", foreignField: "user_id", as: "purchases" } }, { $group: { _id: "$_id", name: { $first: "$name" }, total_purchases: { $sum: { $size: "$purchases" } }, total_spending: { $sum: { $sum: "$purchases.price" } } } }, { $sort: { total_spending: -1 } }])
